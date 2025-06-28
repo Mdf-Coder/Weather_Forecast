@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="fn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather-Forecast</title>
+    <link rel="stylesheet" href="./src/output.css">
+    <script type="module" src="src/script.js" defer></script>
+</head>
+<body class="flex items-center justify-center backdrop-blur-md backdrop-brightness-75 body-bg font-Exo-2">
+
+<!-- SVGs Are Here! -->
+<svg class="hidden">
+    <symbol>
+        <svg id="world-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 0 1-1.161.886l-.143.048a1.107 1.107 0 0 0-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 0 1-1.652.928l-.679-.906a1.125 1.125 0 0 0-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 0 0-8.862 12.872M12.75 3.031a9 9 0 0 1 6.69 14.036m0 0-.177-.529A2.25 2.25 0 0 0 17.128 15H16.5l-.324-.324a1.453 1.453 0 0 0-2.328.377l-.036.073a1.586 1.586 0 0 1-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 0 1-5.276 3.67m0 0a9 9 0 0 1-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25"/>
+        </svg>
+        <svg id="arrow-right" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+        </svg>
+        <svg id="city-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819"/>
+        </svg>
+        <svg id="in-progress-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
+        </svg>
+        <svg id="correct-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+        </svg>
+        <svg id="wrong-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+        </svg>
+        <svg id="search-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+        </svg>
+        <svg id="attention-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
+        </svg>
+
+    </symbol>
+</svg>
+
+<section id="weather-forecast-page" class="w-full min-h-lvh space-y-4 md:space-y-5">
+
+    <!--  Header  -->
+    <div id="app-header"
+         class="mt-10 mx-auto text-center font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white/80 my-text-shadow">
+        Weather
+        Forecast
+    </div>
+
+    <!--  Select Country / City / Search  -->
+    <div id="select-country-city-box"
+         class="mx-auto my-5 w-2/3 md:w-4/5 lg:w-5/7 grid grid-cols-1 sm:grid-cols-3 gap-x-4 gap-y-2.5 md:gap-y-6 lg:gap-x-10">
+
+        <div id="select-country-btn"
+             class="col-span-1 group transition duration-300 bg-black/30 flex items-center gap-x-1 md:gap-x-3 justify-around border-2 hover:bg-emerald-200/90 hover:text-emerald-800 hover:border-emerald-800 border-white cursor-pointer text-base md:text-lg lg:text-xl text-white rounded-2xl p-3 font-Exo-2">
+            <svg class="w-8 h-8 md:w-7 md:h-7 lg:w-8 lg:h-8 transition duration-300 transform group-hover:scale-125 group-hover:rotate-12">
+                <use href="#world-svg"></use>
+            </svg>
+            Country
+            <svg class="w-8 h-8 md:w-7 md:h-7 lg:w-8 lg:h-8 transition duration-300 transform group-hover:translate-x-1.5">
+                <use href="#arrow-right"></use>
+            </svg>
+        </div>
+
+        <div id="select-city-btn"
+             class="col-span-1 group flex transition bg-black/30  duration-300 items-center gap-x-1 md:gap-x-3 justify-around border-2 border-white cursor-pointer hover:bg-yellow-200/90 hover:text-yellow-800 hover:border-yellow-800 text-base md:text-lg lg:text-xl text-white rounded-2xl p-3 font-Exo-2">
+            <svg class="w-8 h-8 md:w-7 md:h-7 lg:w-8 lg:h-8 transition duration-300 transform group-hover:scale-125 group-hover:rotate-12">
+                <use href="#city-svg"></use>
+            </svg>
+            <span id="city-or-state">Capital</span>
+            <svg class="w-8 h-8 md:w-7 md:h-7 lg:w-8 lg:h-8 transition duration-300 transform group-hover:translate-x-1.5">
+                <use href="#arrow-right"></use>
+            </svg>
+        </div>
+
+        <div id="search-btn"
+             class="col-span-1 group transition duration-300 bg-black/30 flex items-center gap-x-1 md:gap-x-3 justify-around border-2 hover:bg-red-200/90 hover:text-red-800 hover:border-red-800 border-white cursor-pointer text-base md:text-lg lg:text-xl text-white rounded-2xl p-3 font-Exo-2">
+            <svg class="w-8 h-8 md:w-7 md:h-7 lg:w-8 lg:h-8 transition duration-300 transform group-hover:scale-125 group-hover:rotate-12">
+                <use href="#search-svg"></use>
+            </svg>
+            Search
+            <svg class="w-8 h-8 md:w-7 md:h-7 lg:w-8 lg:h-8 transition duration-300 transform group-hover:translate-x-1.5">
+                <use href="#arrow-right"></use>
+            </svg>
+        </div>
+
+    </div>
+
+    <!--  Show Weather Forecast  -->
+    <div id="show-weather-forecast" class="hidden mx-auto text-center space-y-5 md:space-y-7">
+
+        <!--    State Name    -->
+        <div id="country-city-name-box"
+             class="text-white/90 line-clamp-1 font-semibold text-shadow-sm text-4xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight">
+            <span id="city-name">Masshad</span>
+            ,
+            <span id="country-code">IR</span>
+        </div>
+
+        <!--    Date    -->
+        <div id="date"
+             class="flex items-center justify-center gap-x-1.5 text-sm sm:text-base lg:text-lg xl:text-xl text-gray-300 font-semibold">
+            <span id="day-in-week">Thursday</span>
+            <span id="date-day">10</span>
+            <span id="date-month">January</span>
+            <span id="date-year">2025</span>
+        </div>
+
+        <!--    Weather Info    -->
+        <div id="weather-info" class="mx-auto text-center grid grid-cols-1 gap-y-3.5">
+
+            <!--      Show Temperature      -->
+            <span class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white/90 my-text-shadow">
+                <span id="temperature">12</span>
+                °C
+            </span>
+
+            <!--      Show Main Weather      -->
+            <span class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white/70 font-bold">
+                <span id="weather-main">Sunny</span>
+                <span id="weather-main-description"
+                      class="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-white/50">(Clear Sky)</span>
+            </span>
+
+            <!--      Show Other Weather Info : wind, min temp ...      -->
+            <span id="other-info" class="w-4/5 xl:w-2/3 overflow-y-auto mx-auto mt-3 grid sm:grid-cols-3 grid-cols-2 sm:gap-3 gap-1.5">
+
+                <span class="col-span-1 text-gray-200/90 flex flex-col items-center justify-center gap-y-2 rounded-2xl h-18 md:h-20 lg:h-22 xl:h-24 opacity-80 bg-neutral-700/40 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+                    Feels Like:
+                    <span id="feels-like-temp"
+                          class="font-extrabold text-xl md:text-2l lg:text-3xl text-white">12 °C</span>
+                </span>
+
+                <span class="col-span-1 text-gray-200/90 flex flex-col items-center justify-center gap-y-2 rounded-2xl h-18 md:h-20 lg:h-22 xl:h-24 opacity-80 bg-neutral-700/40 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+                    Max Temperature:
+                    <span id="temp-max" class="font-extrabold text-xl md:text-2l lg:text-3xl text-white">12 °C</span>
+                </span>
+
+                <span class="col-span-1 text-gray-200/90 flex flex-col items-center justify-center rounded-2xl h-18 md:h-20 lg:h-22 xl:h-24 opacity-80 bg-neutral-700/40 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+                    Min Temperature:
+                    <span id="temp-min" class="font-extrabold text-xl md:text-2l lg:text-3xl text-white">12 °C</span>
+                </span>
+
+                <span class="col-span-1 text-gray-200/90 flex flex-col items-center justify-center rounded-2xl h-18 md:h-20 lg:h-22 xl:h-24 opacity-80 bg-neutral-700/40 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+                    Wind:
+                    <span id="wind" class="font-extrabold text-xl md:text-2l lg:text-3xl text-white">12 Km/H</span>
+                </span>
+
+                <span class="col-span-1 text-gray-200/90 flex flex-col items-center justify-center rounded-2xl h-18 md:h-20 lg:h-22 xl:h-24 opacity-80 bg-neutral-700/40 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+                    Humidity:
+                    <span id="humidity" class="font-extrabold text-xl md:text-2l lg:text-3xl text-white">12%</span>
+                </span>
+
+                <span class="col-span-1 text-gray-200/90 flex flex-col items-center justify-center rounded-2xl h-18 md:h-20 lg:h-22 xl:h-24 opacity-80 bg-neutral-700/40 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+                    Pressure:
+                    <span id="pressure" class="font-extrabold text-xl md:text-2l lg:text-3xl text-white">1024 ATM</span>
+                </span>
+            </span>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div id="overlay"
+     class="absolute transition duration-300 not-visible inset-0 w-full h-lvh backdrop-brightness-75 z-10"></div>
+
+<div id="choose-country-city-modal"
+     class="not-visible absolute bottom-0 max-h-[392px] transition duration-400 rounded-t-4xl grid grid-cols-1 text-center p-2 md:p-4 xl:p-6 w-full shadow-xl space-y-7 bg-white z-20">
+    <div id="close-modal1" class="w-2/10 md:w-1/10 h-1 col-span-1 mx-auto rounded-2xl bg-gray-700/70"></div>
+
+    <!--  List Of Countries  -->
+    <div id="list-of-countries"
+         class="hidden w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-h-[300px] overflow-y-auto text-sm sm:text-base md:text-base lg:text-lg xl:text-xl font-Exo-2 gap-1.5 sm:gap-2 md:gap-4 xl:gap-5 col-span-1 mx-auto">
+    </div>
+
+    <!--  List Of Cities  -->
+    <div id="list-of-cities"
+         class="hidden w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-[300px] overflow-y-auto text-xs sm:text-sm md:text-base lg:text-lg font-Exo-2 gap-1.5 sm:gap-2 md:gap-4 xl:gap-5 col-span-1 mx-auto">
+        <span class="col-span-2 flex items-center text-rose-700 font-semibold tracking-tighter justify-start gap-x-2 p-1.5 rounded-xl bg-indigo-100 border-2 border-indigo-300">
+                    <svg class="w-7 h-7 text-rose-700">
+                    <use href="#attention-svg"></use>
+                    </svg>
+            Select Country Then Wait For Data To Load Here ...
+        </span>
+    </div>
+
+    <!--  Search For A Place  -->
+    <div id="search-div"
+         class="hidden w-full pb-16 grid-cols-3 gap-y-3 text-sm sm:text-base md:text-lg lg:text-xl font-Exo-2 gap-1.5 sm:gap-2 md:gap-4 xl:gap-5 col-span-1 mx-auto">
+        <span class="col-span-2 relative">
+            <input id="searched-place"
+                   class="peer w-full pl-3 py-3 border-[3px] border-b-gray-600 border-y-transparent border-x-transparent outline-0"
+                   type="text" minlength="3" maxlength="30" placeholder='Search For A Place, e.g. "Mashhad"'>
+            <span class="border-b-input absolute transition duration-500 bottom-0 inset-x-0 transform scale-x-0 peer-focus:scale-x-100 w-full h-[3px] bg-rose-600"></span>
+        </span>
+
+        <button id="search-weather"
+                class="col-span-1 border-2 py-3 cursor-pointer transition duration-150 font-bold tracking-widest border-gray-600 hover:border-rose-600 hover:text-rose-600 active:bg-rose-100 rounded-xl">
+            Search
+        </button>
+    </div>
+
+</div>
+
+<div id="notification-bar"
+     class="absolute hide-notif-bar transition duration-400 my-auto z-20 bg-amber-100 border-l-amber-700 border-6 border-r-transparent border-t-transparent border-b-transparent mx-auto w-9/10 lg:w-max text-sm sm:text-base flex flex-col items-center justify-start text-black rounded-r-2xl rounded-l-md p-2">
+
+    <span class="flex items-center justify-start gap-x-2 border-2 border-dashed border-black/80 p-1.5 rounded-xl">
+        <span class="min-w-7 min-h-7">
+            <svg class="in-progress-svg hidden w-7 h-7 text-amber-600 animate-spin">
+            <use href="#in-progress-svg"></use>
+        </svg>
+        <svg class="correct-svg w-7 h-7 text-green-600 animate-bounce">
+            <use href="#correct-svg"></use>
+        </svg>
+        <svg class="wrong-svg hidden w-7 h-7 text-red-600 animate-bounce">
+            <use href="#wrong-svg"></use>
+        </svg>
+        </span>
+
+        <span class="flex items-center gap-x-1.5 tracking-tight ">
+            <span>Getting Info About <span id="place-name" class="text-teal-700 font-black">"Iran"</span> Weather. Depending On Your Connection, This May Take a Few Seconds!</span>
+        <span id="show-states-wrong" class="hidden text-red-600 border border-red-600 p-0.5 rounded-lg font-semibold text-xs text-center sm:text-sm">Failed!</span>
+        </span>
+
+    </span>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Exo2';
+    src: url("./fonts/Exo2-Regular.ttf");
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url("./fonts/Rubik-Regular.ttf");
+}
+
+@font-face {
+    font-family: 'DeliusUnicase';
+    src: url("./fonts/DeliusUnicase-Regular.ttf");
+}
+
+/* Add Costume Styles Here */
+@layer components {
+
+    .font-Exo-2 {
+        font-family: "Exo2", serif;
+    }
+
+    .body-bg {
+        background: url("./img/Foggy/Foggy-1.jpg") center center;
+    }
+
+    .my-text-shadow {
+        text-shadow: oklch(21% 0.006 285.885) 12px 12px 3px;
+    }
+
+    .not-visible {
+        @apply invisible opacity-0 bottom-[392px]
+    }
+
+    .hide-notif-bar {
+        @apply invisible opacity-0 transform scale-0 -translate-y-14
+    }
+
+    .info-notif {
+        @apply bg-amber-100 border-l-amber-700 border-r-transparent border-b-transparent border-t-transparent border-6
+    }
+
+    .before-hover:before {
+        content: 'ali';
+        position: absolute;
+        bottom: 0;
+        margin: 0 auto;
+        width: 100%;
+        height: 2px;
+        background-color: oklch(58.6% 0.253 17.585);
+    }
+
+}
