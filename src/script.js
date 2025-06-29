@@ -30,7 +30,7 @@ function loadCountriesOnline() {
                 let stringFormat =
                     `<label class="col-span-1 flex items-center justify-between p-1.5 rounded-xl bg-indigo-100 transition border-2 border-transparent cursor-pointer has-checked:border-indigo-400 has-checked:bg-cyan-100">
                     <span class="rounded-full overflow-hidden">
-                        <img src="${flagAddress}" class="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8">
+                        <img loading="lazy" src="${flagAddress}" class="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8">
                     </span>
                         ${name}, ${iso2}
                     <input type="radio" name="select-city" value="${name}">
